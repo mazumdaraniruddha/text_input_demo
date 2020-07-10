@@ -1,4 +1,4 @@
-package com.aniruddhamazumdar.cleartaxdemo
+package com.aniruddhamazumdar.cleartaxdemo.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.aniruddhamazumdar.cleartaxdemo.data.SharedPrefsStorage
+import com.aniruddhamazumdar.cleartaxdemo.repo.TextRepository
 import com.aniruddhamazumdar.cleartaxdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +28,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initVM() {
-        var viewModelFactory = ViewModelFactory(TextRepository())
+        var viewModelFactory =
+            ViewModelFactory(
+                TextRepository(
+                    SharedPrefsStorage(
+                        applicationContext
+                    )
+                )
+            )
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 

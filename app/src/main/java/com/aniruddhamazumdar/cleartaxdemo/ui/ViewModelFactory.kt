@@ -1,7 +1,8 @@
-package com.aniruddhamazumdar.cleartaxdemo
+package com.aniruddhamazumdar.cleartaxdemo.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.aniruddhamazumdar.cleartaxdemo.repo.TextRepository
 
 class ViewModelFactory(val repository: TextRepository) : ViewModelProvider.Factory {
 

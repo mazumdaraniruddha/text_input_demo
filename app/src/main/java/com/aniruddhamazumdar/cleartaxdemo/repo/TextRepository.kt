@@ -1,11 +1,18 @@
-package com.aniruddhamazumdar.cleartaxdemo
+package com.aniruddhamazumdar.cleartaxdemo.repo
 
-import java.util.*
+import com.aniruddhamazumdar.cleartaxdemo.data.Storage
 
-class TextRepository {
+class TextRepository(private val storage: Storage) {
 
-    private var textValue: CharSequence? = ""
-    private var currentWordCount: Int? = 0
+    private var textValue: CharSequence?
+        get() {
+            return storage.getText()
+        }
+        set(value) {
+            storage.storeText(value)
+        }
+
+    fun getCurrentText() = textValue
 
     fun updateText(s: CharSequence?): CharSequence? {
         textValue = s
@@ -13,13 +20,12 @@ class TextRepository {
     }
 
     fun getCurrentWordCount(): Int? {
-        currentWordCount = textValue
+        return textValue
             ?.trim()
             ?.split(" ", ",", ".", "!")
             ?.filter {
                 !it.isNullOrEmpty()
             }?.size
-        return currentWordCount
     }
 
     fun handleUndoAction(): Pair<Int?, CharSequence?> {
@@ -29,9 +35,7 @@ class TextRepository {
             ?.split(" ")
         // Update the new text
         textValue = words?.take(words.size - 1)?.joinToString(" ")
-        // Update the text count after undo
-        getCurrentWordCount()
         // Return result
-        return Pair(currentWordCount, textValue)
+        return Pair(getCurrentWordCount(), textValue)
     }
 }
